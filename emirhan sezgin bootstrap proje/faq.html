@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sıkça Sorulan Sorular - emir cafe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Enhanced Global Styles */
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .navbar {
+            background-color: rgba(33, 37, 41, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(33, 37, 41, 0.98) !important;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+        .nav-item {
+            position: relative;
+            margin: 0 5px;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #fff !important;
+            background-color: rgba(220, 53, 69, 0.15);
+        }
+        .nav-link.active {
+            background-color: rgba(220, 53, 69, 0.25);
+        }
+        .navbar-toggler {
+            border: none;
+            padding: 0;
+        }
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        .navbar-toggler-icon {
+            width: 24px;
+            height: 24px;
+            background-image: none !important;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #fff;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+        .navbar-toggler-icon::before {
+            top: 8px;
+        }
+        .navbar-toggler-icon::after {
+            bottom: 8px;
+        }
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 11px;
+        }
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            bottom: 11px;
+        }
+        .btn-reservation {
+            background-color: #dc3545;
+            color: white !important;
+            padding: 10px 25px !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .btn-reservation:hover {
+            background-color: transparent;
+            border-color: #dc3545;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background-color: rgba(33, 37, 41, 0.98);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-item {
+                margin: 5px 0;
+            }
+            .btn-reservation {
+                margin-top: 10px;
+                display: inline-block;
+            }
+        }
+
+        /* Enhanced FAQ Section Styles */
+        .faq-section {
+            padding: 100px 0;
+            background: linear-gradient(to bottom, #f8f9fa, #fff);
+            position: relative;
+        }
+        .faq-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #dc3545, #ff6b6b);
+        }
+        .section-title {
+            position: relative;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529;
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #dc3545;
+            border-radius: 2px;
+        }
+        .accordion {
+            --bs-accordion-border-color: rgba(0,0,0,.1);
+            --bs-accordion-btn-bg: #fff;
+            --bs-accordion-active-bg: #fff;
+            --bs-accordion-active-color: #dc3545;
+            --bs-accordion-btn-focus-box-shadow: none;
+            --bs-accordion-btn-focus-border-color: rgba(0,0,0,.1);
+        }
+        .accordion-item {
+            border: none;
+            margin-bottom: 20px;
+            border-radius: 15px !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .accordion-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .accordion-button {
+            padding: 25px 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #212529;
+            background-color: #fff;
+            border: none;
+            position: relative;
+        }
+        .accordion-button:not(.collapsed) {
+            color: #dc3545;
+            background-color: #fff;
+            box-shadow: none;
+        }
+        .accordion-button::after {
+            width: 1.5rem;
+            height: 1.5rem;
+            background-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .accordion-button:not(.collapsed)::after {
+            transform: rotate(-180deg);
+        }
+        .accordion-body {
+            padding: 25px 30px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #6c757d;
+            background-color: #fff;
+            border-top: 1px solid rgba(0,0,0,.05);
+        }
+
+        /* Enhanced Testimonials Section */
+        .testimonials-section {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .testimonial-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        .testimonial-author {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #212529;
+        }
+        .testimonial-title {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 40px;
+            height: 40px;
+            background: #dc3545;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+        .carousel-control-prev {
+            left: -20px;
+        }
+        .carousel-control-next {
+            right: -20px;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .faq-section {
+                padding: 60px 0;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .accordion-button {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            .accordion-body {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            .testimonial-card {
+                padding: 20px;
+            }
+            .testimonial-quote {
+                font-size: 1rem;
+            }
+            .carousel-control-prev,
+            .carousel-control-next {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/kafelogo.jpg" alt="emir cafe" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto me-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">ANASAYFA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">HAKKIMIZDA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html">MENÜ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">ŞUBELERİMİZ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">İLETİŞİM</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faq.html">SSS</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-reservation">REZERVASYON YAP</a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Sıkça Sorulan Sorular</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Kahve çekirdekleriniz nereden geliyor?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Kahve çekirdeklerimiz dünyanın farklı bölgelerinden, özenle seçilmiş çiftliklerden gelmektedir. 
+                                    Her bir çekirdek, sürdürülebilir tarım uygulamaları ile yetiştirilmekte ve en yüksek kalite 
+                                    standartlarında işlenmektedir.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Rezervasyon yapabilir miyim?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Evet, web sitemiz üzerinden veya telefon ile rezervasyon yapabilirsiniz. 
+                                    Özel etkinlikler ve toplantılar için lütfen en az 24 saat önceden rezervasyon yapınız.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Kahve çekirdeklerinizi satın alabilir miyim?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Evet, mağazalarımızdan veya online mağazamızdan kahve çekirdeklerimizi satın alabilirsiniz. 
+                                    Ayrıca özel kavurma seçenekleri ve hediye paketleri de mevcuttur.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Barista eğitimi veriyor musunuz?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Evet, profesyonel baristalarımız tarafından verilen eğitimlerimiz mevcuttur. 
+                                    Başlangıç seviyesinden ileri seviyeye kadar farklı programlar sunuyoruz. 
+                                    Detaylı bilgi için iletişim sayfamızdan bize ulaşabilirsiniz.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Franchise veriyor musunuz?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Evet, belirli kriterleri sağlayan iş ortaklarımızla franchise anlaşmaları yapıyoruz. 
+                                    Detaylı bilgi için franchise sayfamızı ziyaret edebilir veya bizimle iletişime geçebilirsiniz.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Müşterilerimiz Ne Diyor?</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="testimonial-card">
+                                    <i class="bi bi-quote fs-1 text-danger opacity-25"></i>
+                                    <p class="testimonial-quote">emir cafe'nin kahveleri gerçekten çok özel. Her ziyaretimde farklı bir kahve deneyimi yaşıyorum. Baristaların bilgisi ve ilgisi de çok etkileyici.</p>
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h5 class="testimonial-author mb-1">Hakan Kahraman</h5>
+                                            <p class="testimonial-title mb-0">Düzenli Müşteri</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-card">
+                                    <i class="bi bi-quote fs-1 text-danger opacity-25"></i>
+                                    <p class="testimonial-quote">Çalışma ortamı çok rahat ve huzurlu. Kahvelerinin yanında sunulan tatlılar da muhteşem. Kesinlikle tavsiye ediyorum.</p>
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h5 class="testimonial-author mb-1">Sedef Hak</h5>
+                                            <p class="testimonial-title mb-0">Kahve Tutkunu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-card">
+                                    <i class="bi bi-quote fs-1 text-danger opacity-25"></i>
+                                    <p class="testimonial-quote">Barista eğitimlerine katıldım ve çok memnun kaldım. Profesyonel ekip sayesinde kahve yapımı konusunda çok şey öğrendim.</p>
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h5 class="testimonial-author mb-1">Ece Güzel</h5>
+                                            <p class="testimonial-title mb-0">Barista Eğitimi Katılımcısı</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <h2 class="h4 fw-semibold mb-4">Yeniliklerden haberdar olmak için e-posta listemize kayıt olun.</h2>
+                    <div class="d-flex gap-3">
+                        <input type="email" class="form-control" placeholder="E-posta adresiniz">
+                        <button class="btn btn-dark">Abone ol</button>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="h5 fw-medium mb-4">Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="menu.html" class="text-decoration-none text-muted">Menü</a></li>
+                        <li class="mb-2"><a href="gallery.html" class="text-decoration-none text-muted">Şubelerimiz</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-muted">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="h5 fw-medium mb-4">Sosyal Medya</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-facebook fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-instagram fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-twitter-x fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-youtube fs-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="bg-secondary py-3">
+        <div class="container">
+            <p class="text-center text-white mb-0">
+                copyright © 2024 emir cafe. Tüm haklar saklıdır.
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

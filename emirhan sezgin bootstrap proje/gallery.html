@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri - emir cafe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Navbar Styles */
+        .navbar {
+            background-color: rgba(33, 37, 41, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(33, 37, 41, 0.98) !important;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+        .nav-item {
+            position: relative;
+            margin: 0 5px;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #fff !important;
+            background-color: rgba(220, 53, 69, 0.15);
+        }
+        .nav-link.active {
+            background-color: rgba(220, 53, 69, 0.25);
+        }
+        .navbar-toggler {
+            border: none;
+            padding: 0;
+        }
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        .navbar-toggler-icon {
+            width: 24px;
+            height: 24px;
+            background-image: none !important;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #fff;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+        .navbar-toggler-icon::before {
+            top: 8px;
+        }
+        .navbar-toggler-icon::after {
+            bottom: 8px;
+        }
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 11px;
+        }
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            bottom: 11px;
+        }
+        .btn-reservation {
+            background-color: #dc3545;
+            color: white !important;
+            padding: 10px 25px !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .btn-reservation:hover {
+            background-color: transparent;
+            border-color: #dc3545;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background-color: rgba(33, 37, 41, 0.98);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-item {
+                margin: 5px 0;
+            }
+            .btn-reservation {
+                margin-top: 10px;
+                display: inline-block;
+            }
+        }
+        /* Enhanced Gallery Styles */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fff;
+            height: 500px;
+        }
+        .gallery-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.15);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, 
+                rgba(0, 0, 0, 0.9) 0%,
+                rgba(0, 0, 0, 0.7) 50%,
+                rgba(0, 0, 0, 0.3) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 40px;
+            text-align: center;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .gallery-item .overlay h5 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .gallery-item:hover .overlay h5 {
+            transform: translateY(0);
+        }
+        .gallery-item .overlay p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+            line-height: 1.6;
+        }
+        .gallery-item:hover .overlay p {
+            transform: translateY(0);
+        }
+        .gallery-item .overlay .store-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 300px;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+        .gallery-item:hover .overlay .store-info {
+            transform: translateY(0);
+        }
+        .gallery-item .overlay .store-info p {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            transform: none;
+        }
+        .gallery-item .overlay .store-info i {
+            color: #dc3545;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        .gallery-item .overlay .btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.4s ease;
+            transform: translateY(30px);
+            opacity: 0;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+        .gallery-item:hover .overlay .btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .gallery-item .overlay .btn:hover {
+            background-color: #fff;
+            color: #dc3545;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        }
+        .section-title {
+            position: relative;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #dc3545;
+            border-radius: 2px;
+        }
+        .store-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .store-info i {
+            color: #dc3545;
+            margin-right: 10px;
+        }
+        @media (max-width: 768px) {
+            .gallery-item {
+                height: 400px;
+                margin-bottom: 30px;
+            }
+            .gallery-item .overlay h5 {
+                font-size: 1.5rem;
+            }
+            .gallery-item .overlay p {
+                font-size: 1rem;
+            }
+            .gallery-item .overlay .store-info {
+                padding: 15px;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/kafelogo.jpg" alt="emir cafe" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto me-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">ANASAYFA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">HAKKIMIZDA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html">MENÜ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="gallery.html">ŞUBELERİMİZ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">İLETİŞİM</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faq.html">SSS</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-reservation">REZERVASYON YAP</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery -->
+    <section class="py-5 mt-5">
+        <div class="container">
+            <h2 class="text-center section-title">Şubelerimiz</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="gallery-item">
+                        <img src="image/kahve ortamı.jpg" alt="Karabük Şubesi" class="img-fluid">
+                        <div class="overlay">
+                            <h5>Karabük Şubesi</h5>
+                            <p>100. Yıl Mahallesi Prof. Dr. Burhanettin Uysal Cad. No: 27/A Koç Apt, 78050 Merkez/Karabük</p>
+                            <div class="store-info">
+                                <p><i class="bi bi-clock"></i> Her gün 08:00 - 22:00</p>
+                                <p><i class="bi bi-telephone"></i> +90 370 123 45 67</p>
+                            </div>
+                            <a href="https://maps.app.goo.gl/QQjCoYom4GHL1EkX9" target="_blank" class="btn">Yol Tarifi Al</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gallery-item">
+                        <img src="image/slider1.jpg" alt="İstanbul Şubesi" class="img-fluid">
+                        <div class="overlay">
+                            <h5>İstanbul Şubesi</h5>
+                            <p>Bağdat Caddesi No: 123, Kadıköy/İstanbul</p>
+                            <div class="store-info">
+                                <p><i class="bi bi-clock"></i> Her gün 08:00 - 23:00</p>
+                                <p><i class="bi bi-telephone"></i> +90 216 123 45 67</p>
+                            </div>
+                            <a href="#" class="btn">Yol Tarifi Al</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gallery-item">
+                        <img src="image/slider2.jpg" alt="Ankara Şubesi" class="img-fluid">
+                        <div class="overlay">
+                            <h5>Ankara Şubesi</h5>
+                            <p>Çankaya Caddesi No: 45, Çankaya/Ankara</p>
+                            <div class="store-info">
+                                <p><i class="bi bi-clock"></i> Her gün 08:00 - 22:00</p>
+                                <p><i class="bi bi-telephone"></i> +90 312 123 45 67</p>
+                            </div>
+                            <a href="#" class="btn">Yol Tarifi Al</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gallery-item">
+                        <img src="image/slider3.jpg" alt="İzmir Şubesi" class="img-fluid">
+                        <div class="overlay">
+                            <h5>İzmir Şubesi</h5>
+                            <p>Kordon Boyu No: 78, Konak/İzmir</p>
+                            <div class="store-info">
+                                <p><i class="bi bi-clock"></i> Her gün 08:00 - 23:00</p>
+                                <p><i class="bi bi-telephone"></i> +90 232 123 45 67</p>
+                            </div>
+                            <a href="#" class="btn">Yol Tarifi Al</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gallery-item">
+                        <img src="image/kahve demleme.jpg" alt="Bursa Şubesi" class="img-fluid">
+                        <div class="overlay">
+                            <h5>Bursa Şubesi</h5>
+                            <p>Nilüfer Caddesi No: 90, Nilüfer/Bursa</p>
+                            <div class="store-info">
+                                <p><i class="bi bi-clock"></i> Her gün 08:00 - 22:00</p>
+                                <p><i class="bi bi-telephone"></i> +90 224 123 45 67</p>
+                            </div>
+                            <a href="#" class="btn">Yol Tarifi Al</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gallery-item">
+                        <img src="image/drinks1.jpg" alt="Antalya Şubesi" class="img-fluid">
+                        <div class="overlay">
+                            <h5>Antalya Şubesi</h5>
+                            <p>Lara Caddesi No: 56, Muratpaşa/Antalya</p>
+                            <div class="store-info">
+                                <p><i class="bi bi-clock"></i> Her gün 08:00 - 23:00</p>
+                                <p><i class="bi bi-telephone"></i> +90 242 123 45 67</p>
+                            </div>
+                            <a href="#" class="btn">Yol Tarifi Al</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <h2 class="h4 fw-semibold mb-4">Yeniliklerden haberdar olmak için e-posta listemize kayıt olun.</h2>
+                    <div class="d-flex gap-3">
+                        <input type="email" class="form-control" placeholder="E-posta adresiniz">
+                        <button class="btn btn-dark">Abone ol</button>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="h5 fw-medium mb-4">Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="menu.html" class="text-decoration-none text-muted">Menü</a></li>
+                        <li class="mb-2"><a href="gallery.html" class="text-decoration-none text-muted">Şubelerimiz</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-muted">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="h5 fw-medium mb-4">Sosyal Medya</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-facebook fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-instagram fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-twitter-x fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-youtube fs-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="bg-secondary py-3">
+        <div class="container">
+            <p class="text-center text-white mb-0">
+                copyright © 2024 emir cafe. Tüm haklar saklıdır.
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> 

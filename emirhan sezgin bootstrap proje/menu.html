@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menü - emir cafe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Enhanced Global Styles */
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .navbar {
+            background-color: rgba(33, 37, 41, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(33, 37, 41, 0.98) !important;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+        .nav-item {
+            position: relative;
+            margin: 0 5px;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #fff !important;
+            background-color: rgba(220, 53, 69, 0.15);
+        }
+        .nav-link.active {
+            background-color: rgba(220, 53, 69, 0.25);
+        }
+        .navbar-toggler {
+            border: none;
+            padding: 0;
+        }
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        .navbar-toggler-icon {
+            width: 24px;
+            height: 24px;
+            background-image: none !important;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #fff;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+        .navbar-toggler-icon::before {
+            top: 8px;
+        }
+        .navbar-toggler-icon::after {
+            bottom: 8px;
+        }
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 11px;
+        }
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            bottom: 11px;
+        }
+        .btn-reservation {
+            background-color: #dc3545;
+            color: white !important;
+            padding: 10px 25px !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .btn-reservation:hover {
+            background-color: transparent;
+            border-color: #dc3545;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background-color: rgba(33, 37, 41, 0.98);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-item {
+                margin: 5px 0;
+            }
+            .btn-reservation {
+                margin-top: 10px;
+                display: inline-block;
+            }
+        }
+
+        /* Enhanced Menu Styles */
+        .menu-section {
+            padding: 100px 0;
+            background: linear-gradient(to bottom, #f8f9fa, #fff);
+            position: relative;
+        }
+        .menu-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #dc3545, #ff6b6b);
+        }
+        .section-title {
+            position: relative;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529;
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #dc3545;
+            border-radius: 2px;
+        }
+        .nav-pills .nav-link,
+        .nav-pills .nav-link.active,
+        .nav-pills .nav-link:disabled,
+        .nav-pills .nav-link.disabled {
+            color: #dc3545 !important;
+        }
+        .nav-pills .nav-link {
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav-pills .nav-link.active {
+            background-color: #dc3545 !important;
+            color: #fff !important;
+        }
+        .nav-pills .nav-link:hover:not(.active) {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        .menu-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fff;
+            height: 100%;
+        }
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .menu-card img {
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .menu-card:hover img {
+            transform: scale(1.1);
+        }
+        .menu-card .card-body {
+            padding: 25px;
+            text-align: center;
+        }
+        .menu-card .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #212529;
+        }
+        .menu-card .text-muted {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .menu-card .badge {
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background-color: #f8f9fa;
+            color: #dc3545;
+            font-weight: 500;
+        }
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fff;
+            height: 100%;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .product-card img {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.1);
+        }
+        .product-card .card-body {
+            padding: 25px;
+        }
+        .product-card .text-danger {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .product-card .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #212529;
+        }
+        .product-card .text-muted {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .product-card .btn-dark {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Accordion Styles */
+        .accordion {
+            --bs-accordion-border-color: rgba(0,0,0,.1);
+            --bs-accordion-btn-bg: #fff;
+            --bs-accordion-active-bg: #fff;
+            --bs-accordion-active-color: #dc3545;
+            --bs-accordion-btn-focus-box-shadow: none;
+            --bs-accordion-btn-focus-border-color: rgba(0,0,0,.1);
+        }
+        .accordion-item {
+            border: none;
+            margin-bottom: 20px;
+            border-radius: 15px !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .accordion-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .accordion-button {
+            padding: 25px 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #212529;
+            background-color: #fff;
+            border: none;
+            position: relative;
+        }
+        .accordion-button:not(.collapsed) {
+            color: #dc3545;
+            background-color: #fff;
+            box-shadow: none;
+        }
+        .accordion-button::after {
+            width: 1.5rem;
+            height: 1.5rem;
+            background-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .accordion-button:not(.collapsed)::after {
+            transform: rotate(-180deg);
+        }
+        .accordion-body {
+            padding: 25px 30px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #6c757d;
+            background-color: #fff;
+            border-top: 1px solid rgba(0,0,0,.05);
+        }
+
+        /* Enhanced Icon Features Styles */
+        .icon-features {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(220, 53, 69, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            transition: all 0.3s ease;
+        }
+        .icon-wrapper:hover {
+            transform: scale(1.1);
+            background: rgba(220, 53, 69, 0.2);
+        }
+        .icon-wrapper i {
+            color: #dc3545;
+            transition: all 0.3s ease;
+        }
+        .icon-wrapper:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-section {
+                padding: 60px 0;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .nav-pills .nav-link {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .menu-card img {
+                height: 200px;
+            }
+            .product-card img {
+                height: 180px;
+            }
+            .accordion-button {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            .accordion-body {
+                padding: 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/kafelogo.jpg" alt="emir cafe" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto me-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">ANASAYFA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">HAKKIMIZDA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="menu.html">MENÜ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">ŞUBELERİMİZ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">İLETİŞİM</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faq.html">SSS</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-reservation">REZERVASYON YAP</a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    <!-- Menu -->
+    <section class="menu-section">
+        <div class="container">
+            <h2 class="text-center section-title">Menümüz</h2>
+            <ul class="nav nav-pills mb-5 justify-content-center" id="menuTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="foods-tab" data-bs-toggle="pill" data-bs-target="#foods" type="button" role="tab">
+                        <i class="bi bi-cake2 me-2"></i>Yiyecekler
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="drinks-tab" data-bs-toggle="pill" data-bs-target="#drinks" type="button" role="tab">
+                        <i class="bi bi-cup-hot me-2"></i>İçecekler
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="products-tab" data-bs-toggle="pill" data-bs-target="#products" type="button" role="tab">
+                        <i class="bi bi-box-seam me-2"></i>Ürünler
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="menuTabsContent">
+                <!-- Foods Tab -->
+                <div class="tab-pane fade show active" id="foods" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/foods1.jpg" class="card-img-top" alt="Portakallı kek">
+                                <div class="card-body">
+                                    <h5 class="card-title">Portakallı kek</h5>
+                                    <p class="text-muted">Taze portakal suyu ile hazırlanmış, üzeri bitter çikolata ile kaplı</p>
+                                    <span class="badge">45,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/çikolatalıkek.jpg" class="card-img-top" alt="Çikolatalı kek">
+                                <div class="card-body">
+                                    <h5 class="card-title">Çikolatalı kek</h5>
+                                    <p class="text-muted">Belçika çikolatası ile hazırlanmış, içi yumuşacık</p>
+                                    <span class="badge">48,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/cheesecake.jpg" class="card-img-top" alt="Cheesecake">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cheesecake</h5>
+                                    <p class="text-muted">New York usulü, frambuaz soslu</p>
+                                    <span class="badge">52,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/tiramisu.jpg" class="card-img-top" alt="Tiramisu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tiramisu</h5>
+                                    <p class="text-muted">İtalyan usulü, mascarpone peyniri ile hazırlanmış</p>
+                                    <span class="badge">55,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/Croissant.jpg" class="card-img-top" alt="Croissant">
+                                <div class="card-body">
+                                    <h5 class="card-title">Croissant</h5>
+                                    <p class="text-muted">Fransız usulü, tereyağlı ve çikolatalı</p>
+                                    <span class="badge">35,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/Muffin.jpg" class="card-img-top" alt="Muffin">
+                                <div class="card-body">
+                                    <h5 class="card-title">Muffin</h5>
+                                    <p class="text-muted">Yaban mersinli, içi yumuşacık</p>
+                                    <span class="badge">32,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Drinks Tab -->
+                <div class="tab-pane fade" id="drinks" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/Spanishlatte.jpg" class="card-img-top" alt="Spanish latte">
+                                <div class="card-body">
+                                    <h5 class="card-title">Spanish latte</h5>
+                                    <p class="text-muted">Espresso, süt ve tatlı karamel</p>
+                                    <span class="badge">55,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/Coldbrew.jpg" class="card-img-top" alt="Cold brew">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cold brew</h5>
+                                    <p class="text-muted">24 saat soğuk demleme, yumuşak içimli</p>
+                                    <span class="badge">48,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/türkkahvesi.jpg" class="card-img-top" alt="Türk kahvesi">
+                                <div class="card-body">
+                                    <h5 class="card-title">Türk kahvesi</h5>
+                                    <p class="text-muted">Geleneksel yöntemle hazırlanmış</p>
+                                    <span class="badge">42,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/FlatWhite.jpg" class="card-img-top" alt="Flat White">
+                                <div class="card-body">
+                                    <h5 class="card-title">Flat White</h5>
+                                    <p class="text-muted">İnce köpüklü, yoğun espresso</p>
+                                    <span class="badge">50,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/Cappuccino.jpg" class="card-img-top" alt="Cappuccino">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cappuccino</h5>
+                                    <p class="text-muted">Eşit oranda espresso, süt ve köpük</p>
+                                    <span class="badge">45,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="menu-card">
+                                <img src="image/Mocha.jpg" class="card-img-top" alt="Mocha">
+                                <div class="card-body">
+                                    <h5 class="card-title">Mocha</h5>
+                                    <p class="text-muted">Espresso, süt ve çikolata</p>
+                                    <span class="badge">52,00 ₺</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products Tab -->
+                <div class="tab-pane fade" id="products" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="product-card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="image/kahveEthiopia Yirgacheffe.jpg" class="img-fluid rounded-start w-100" alt="Ethiopia Yirgacheffe">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h6 class="text-danger">Kahve</h6>
+                                            <h5 class="card-title">Ethiopia Yirgacheffe 250 g</h5>
+                                            <p class="text-muted">Çiçeksi ve narenciye notaları</p>
+                                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                                <span class="badge">420,00 ₺</span>
+                                                <button class="btn btn-dark">Sepete Ekle</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product-card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="image/kahveeColombia Supremo.jpg" class="img-fluid rounded-start w-100" alt="Colombia Supremo">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h6 class="text-danger">Kahve</h6>
+                                            <h5 class="card-title">Colombia Supremo 250 g</h5>
+                                            <p class="text-muted">Fındık ve çikolata notaları</p>
+                                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                                <span class="badge">380,00 ₺</span>
+                                                <button class="btn btn-dark">Sepete Ekle</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product-card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="image/kahveBrazil Santos.jpg" class="img-fluid rounded-start w-100" alt="Brazil Santos">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h6 class="text-danger">Kahve</h6>
+                                            <h5 class="card-title">Brazil Santos 250 g</h5>
+                                            <p class="text-muted">Karamel ve fındık notaları</p>
+                                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                                <span class="badge">350,00 ₺</span>
+                                                <button class="btn btn-dark">Sepete Ekle</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product-card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="image/kahveGuatemala Antigua.jpg" class="img-fluid rounded-start w-100" alt="Guatemala Antigua">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h6 class="text-danger">Kahve</h6>
+                                            <h5 class="card-title">Guatemala Antigua 250 g</h5>
+                                            <p class="text-muted">Kakao ve baharat notaları</p>
+                                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                                <span class="badge">400,00 ₺</span>
+                                                <button class="btn btn-dark">Sepete Ekle</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Accordion -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Ürün Detayları</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="productAccordion">
+                        <!-- Kahve Paketleri -->
+                        <div class="accordion-item border-0 mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-white shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#coffeePackages">
+                                    <i class="bi bi-cup-hot-fill text-danger me-2"></i>
+                                    Kahve Paketleri
+                                </button>
+                            </h2>
+                            <div id="coffeePackages" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Başlangıç Paketi</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Ethiopia Yirgacheffe 250g</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Colombia Supremo 250g</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>French Press</li>
+                                                        <li class="text-danger fw-bold mt-3">750,00 ₺</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Premium Paket</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Ethiopia Yirgacheffe 500g</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Colombia Supremo 500g</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Chemex</li>
+                                                        <li class="text-danger fw-bold mt-3">1.450,00 ₺</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Barista Eğitimi -->
+                        <div class="accordion-item border-0 mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-white shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#baristaTraining">
+                                    <i class="bi bi-person-workspace text-danger me-2"></i>
+                                    Barista Eğitimi
+                                </button>
+                            </h2>
+                            <div id="baristaTraining" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Temel Eğitim</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Kahve Tarihi ve Kültürü</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Temel Demleme Teknikleri</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Espresso Hazırlama</li>
+                                                        <li class="text-danger fw-bold mt-3">2.500,00 ₺</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">İleri Seviye</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Latte Art Teknikleri</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Kahve Tadımı</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Menü Tasarımı</li>
+                                                        <li class="text-danger fw-bold mt-3">3.500,00 ₺</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Özel Etkinlikler -->
+                        <div class="accordion-item border-0">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-white shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#specialEvents">
+                                    <i class="bi bi-calendar-event text-danger me-2"></i>
+                                    Özel Etkinlikler
+                                </button>
+                            </h2>
+                            <div id="specialEvents" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Kahve Tadım Etkinliği</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>5 Farklı Kahve Çeşidi</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Uzman Eşliğinde Tadım</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Kahve Eşleştirmeleri</li>
+                                                        <li class="text-danger fw-bold mt-3">Kişi Başı 350,00 ₺</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card h-100 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Özel Grup Etkinliği</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Özel Mekan Kullanımı</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Profesyonel Barista</li>
+                                                        <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i>Özel Menü Seçenekleri</li>
+                                                        <li class="text-danger fw-bold mt-3">Fiyat için iletişime geçin</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Icon Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center p-4 h-100">
+                        <div class="icon-wrapper mb-4">
+                            <i class="bi bi-cup-hot-fill display-4 text-danger"></i>
+                        </div>
+                        <h3 class="h5 mb-3">Özel Kahve Çeşitleri</h3>
+                        <p class="text-muted mb-0">
+                            Dünyanın farklı bölgelerinden özenle seçilmiş, 
+                            özel kavrulmuş kahve çeşitlerimizle benzersiz 
+                            bir deneyim sunuyoruz.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center p-4 h-100">
+                        <div class="icon-wrapper mb-4">
+                            <i class="bi bi-award-fill display-4 text-danger"></i>
+                        </div>
+                        <h3 class="h5 mb-3">Kalite Garantisi</h3>
+                        <p class="text-muted mb-0">
+                            Her fincan kahvemiz, uzman baristalarımız tarafından 
+                            özenle hazırlanır ve kalite kontrolünden geçer.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center p-4 h-100">
+                        <div class="icon-wrapper mb-4">
+                            <i class="bi bi-people-fill display-4 text-danger"></i>
+                        </div>
+                        <h3 class="h5 mb-3">Uzman Ekip</h3>
+                        <p class="text-muted mb-0">
+                            Deneyimli baristalarımız ve kahve uzmanlarımızla 
+                            size en iyi hizmeti sunmak için buradayız.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center p-4 h-100">
+                        <div class="icon-wrapper mb-4">
+                            <i class="bi bi-heart-fill display-4 text-danger"></i>
+                        </div>
+                        <h3 class="h5 mb-3">Müşteri Memnuniyeti</h3>
+                        <p class="text-muted mb-0">
+                            Müşterilerimizin memnuniyeti bizim için en önemli 
+                            önceliktir. Her zaman en iyisini sunmaya çalışıyoruz.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <h2 class="h4 fw-semibold mb-4">Yeniliklerden haberdar olmak için e-posta listemize kayıt olun.</h2>
+                    <div class="d-flex gap-3">
+                        <input type="email" class="form-control" placeholder="E-posta adresiniz">
+                        <button class="btn btn-dark">Abone ol</button>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="h5 fw-medium mb-4">Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="menu.html" class="text-decoration-none text-muted">Menü</a></li>
+                        <li class="mb-2"><a href="gallery.html" class="text-decoration-none text-muted">Şubelerimiz</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-muted">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="h5 fw-medium mb-4">Sosyal Medya</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-facebook fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-instagram fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-twitter-x fs-4"></i>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <i class="bi bi-youtube fs-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="bg-secondary py-3">
+        <div class="container">
+            <p class="text-center text-white mb-0">
+                copyright © 2024 emir cafe. Tüm haklar saklıdır.
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
